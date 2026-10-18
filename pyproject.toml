@@ -1,0 +1,40 @@
+[project]
+name = "downdetector"
+version = "0.1.0"
+description = "Status of third-party services"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic",
+    "argon2-cffi",
+    "asyncpg",
+    "email-validator",
+    "fastapi",
+    "pydantic-settings",
+    "redis",
+    "sqlalchemy[asyncio]",
+    "uvicorn[standard]",
+]
+
+[dependency-groups]
+dev = [
+    "httpx",
+    "pytest",
+    "pytest-asyncio",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
