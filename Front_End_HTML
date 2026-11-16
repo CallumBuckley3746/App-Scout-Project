@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppView Dashboard</title>
+
+    <link rel="stylesheet" href="AgileProcesses.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <h2>AppView</h2>
+
+            <nav>
+                <a class="active" href="#dashboard"> Dashboard</a>
+                <a href="#top-apps"> Top Apps</a>
+                <a href="#categories"> Categories</a>
+                <a href="#snapshot"> Compare Apps</a>
+                <a href="#activity"> Reports</a>
+                <a href="#settings"> Settings</a>
+            </nav>
+
+            <div class="promo">
+                <h3>Track. Compare.<br>Make better choices.</h3>
+                <p>Get the latest app statistics and download numbers all in one place.</p>
+            </div>
+        </aside>
+
+        <main>
+            <header class="topbar">
+                <input type="search" id="search"
+                    placeholder="Search for an app...">
+
+                <span> &nbsp; AppView User</span>
+            </header>
+
+            <section id="dashboard" class="content">
+                <div class="welcome">
+                    <div>
+                        <h1>Welcome back, AppView User</h1>
+                        <p>Overview of app downloads and statistics.</p>
+                    </div>
+
+                    <select id="dateRange">
+                        <option>Last 30 Days</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 90 Days</option>
+                    </select>
+                </div>
+
+                <section class="stats">
+                    <div class="stat-card">
+                        <p>Total Downloads</p>
+                        <h2>2,847,521</h2>
+                        <span> 12.4%</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Apps Tracked</p>
+                        <h2>150</h2>
+                        <span> 3.4%</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Active Users</p>
+                        <h2>1,923,447</h2>
+                        <span> 8.7%</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Average Downloads per App</p>
+                        <h2>18,983</h2>
+                        <span> 6.2%</span>
+                    </div>
+                </section>
+
+                <section class="charts">
+                    <div class="card">
+                        <h3>Download Trends</h3>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+
+                    <div class="card" id="categories">
+                        <h3>Downloads by Category</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="bottom-grid">
+                    <div class="card" id="top-apps">
+                        <h3>Top Apps by Downloads</h3>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>App</th>
+                                    <th>Category</th>
+                                    <th>Downloads</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appTable"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="card" id="snapshot">
+                        <h3>Weekly Download Statistics</h3>
+                        <canvas id="weeklyChart"></canvas>
+                    </div>
+                </section>
+
+                <section class="card activity" id="activity">
+                    <h3>Recent Activity</h3>
+                    <ul id="activityList"></ul>
+                </section>
+
+                <div id="settings" class="card">
+                    <h3>Settings</h3>
+                    <p>Dashboard preferences and configuration.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
