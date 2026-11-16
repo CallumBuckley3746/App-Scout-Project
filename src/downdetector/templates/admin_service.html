@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }}{% endblock %}
+{% block body %}
+  <p class="back"><a href="/admin">Catalog</a></p>
+  <section class="panel">
+    <h1>{{ service.name }}</h1>
+    <p class="muted"><a href="/services/{{ service.slug }}">View as a visitor</a></p>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="/admin/services/{{ service.slug }}" class="stack">
+      {% include "service_fields.html" %}
+      <button type="submit">Save service</button>
+    </form>
+    <form method="post" action="/admin/services/{{ service.slug }}/delete">
+      <button class="danger" type="submit">Delete service</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Checks</h2>
+    {% if checks %}
+      {% for check in checks %}
+        <article class="panel check">
+          <h3>{{ check.kind | kind_label }} · {{ check.purpose | purpose_label }}</h3>
+          <form method="post" action="/admin/services/{{ service.slug }}/checks/{{ check.id }}" class="stack">
+            {% with prefix=check %}
+              {% include "check_fields.html" %}
+            {% endwith %}
+            <button type="submit">Save check</button>
+          </form>
+          <form method="post" action="/admin/services/{{ service.slug }}/checks/{{ check.id }}/delete">
+            <button class="quiet" type="submit">Delete check</button>
+          </form>
+        </article>
+      {% endfor %}
+    {% else %}
+      <p class="empty">No checks yet.</p>
+    {% endif %}
+  </section>
+
+  <section class="panel">
+    <h2>New check</h2>
+    <form method="post" action="/admin/services/{{ service.slug }}/checks" class="stack">
+      {% with prefix=none %}
+        {% include "check_fields.html" %}
+      {% endwith %}
+      <button type="submit">Add check</button>
+    </form>
+  </section>
+{% endblock %}

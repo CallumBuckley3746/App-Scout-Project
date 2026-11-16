@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}{{ service.name }}{% endblock %}
+{% block body %}
+  <p class="back"><a href="/">All services</a></p>
+  <article class="detail {{ service.status }}">
+    <span class="pill">{{ service.status | status_label }}</span>
+    <h1>{{ service.name }}</h1>
+    <p class="muted">{{ service.domain }}{% if service.company_name %} · {{ service.company_name }}{% endif %}</p>
+    {% if service.description %}
+      <p class="description">{{ service.description }}</p>
+    {% endif %}
+    <p><a href="{{ service.homepage_url }}" rel="noopener noreferrer">{{ service.homepage_url }}</a></p>
+    <dl class="facts">
+      <div>
+        <dt>Status since</dt>
+        <dd>{{ service.status_since | when }}</dd>
+      </div>
+      <div>
+        <dt>Last check</dt>
+        <dd>{{ service.last_checked_at | when }}</dd>
+      </div>
+      <div>
+        <dt>Breaches</dt>
+        <dd>{{ service.breach_count }}{% if service.major_breach_count %} · major {{ service.major_breach_count }}{% endif %}</dd>
+      </div>
+    </dl>
+  </article>
+
+  {% set open_incidents = service.incidents | selectattr('resolved_at', 'none') | list %}
+  {% if open_incidents %}
+    <section class="now">
+      <h2>Right now</h2>
+      <ul class="list">
+        {% for item in open_incidents %}
+          <li>
+            <strong>{{ item.title }}</strong>
+            <span class="pill">{{ item.status | status_label }}</span>
+            <span class="muted">{{ item.source | source_label }} · since {{ item.opened_at | when }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <section>
+    <h2>Incidents</h2>
+    {% if service.incidents %}
+      <ul class="list">
+        {% for item in service.incidents %}
+          <li>
+            <strong>{{ item.title }}</strong>
+            <span class="pill">{{ item.status | status_label }}</span>
+            <span class="muted">{{ item.source | source_label }} · since {{ item.opened_at | when }}</span>
+            {% if item.resolved_at %}
+              <span class="muted">closed {{ item.resolved_at | when }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">No incidents.</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Breaches</h2>
+    {% if service.breaches %}
+      <ul class="list">
+        {% for item in service.breaches %}
+          <li>
+            <strong>{{ item.title }}</strong>
+            <span class="muted">{{ item.severity | severity_label }} · {{ item.published_at | when }}</span>
+            {% if item.breach_date %}
+              <span class="muted">breach date {{ item.breach_date | when }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty">No published breaches.</p>
+    {% endif %}
+  </section>
+{% endblock %}

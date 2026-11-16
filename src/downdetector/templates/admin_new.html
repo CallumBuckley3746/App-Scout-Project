@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}New service{% endblock %}
+{% block body %}
+  <p class="back"><a href="/admin">Catalog</a></p>
+  <section class="panel">
+    <h1>New service</h1>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="/admin/services/new" class="stack">
+      {% include "service_fields.html" %}
+      <button type="submit">Create</button>
+    </form>
+  </section>
+{% endblock %}

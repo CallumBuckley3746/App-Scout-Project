@@ -1,0 +1,27 @@
+<ul class="grid">
+  {% for item in items %}
+    <li>
+      <a class="card {{ item.status }}" href="/services/{{ item.slug }}">
+        <span class="card-top">
+          <span class="pill">{{ item.status | status_label }}</span>
+          {% if item.breach_count %}
+            <span class="badge {% if item.major_breach_count %}major{% endif %}">
+              breaches {{ item.breach_count }}{% if item.major_breach_count %} · major {{ item.major_breach_count }}{% endif %}
+            </span>
+          {% endif %}
+        </span>
+        <strong>{{ item.name }}</strong>
+        <span class="domain">{{ item.domain }}</span>
+        {% if item.open_incident %}
+          <span class="incident">{{ item.open_incident }}</span>
+        {% elif item.company_name %}
+          <span class="muted">{{ item.company_name }}</span>
+        {% endif %}
+        <span class="when">
+          {% if item.status_since %}since {{ item.status_since | when }}{% else %}status not confirmed yet{% endif %}
+          {% if item.last_checked_at %} · checked {{ item.last_checked_at | when }}{% endif %}
+        </span>
+      </a>
+    </li>
+  {% endfor %}
+</ul>

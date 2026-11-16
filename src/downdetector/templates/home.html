@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Services{% endblock %}
+{% block body %}
+  <section class="hero">
+    <h1>What is up right now</h1>
+    <form class="search" method="get" action="/">
+      <label>
+        <span>Search by name or domain</span>
+        <input type="search" name="q" value="{{ query }}" placeholder="spotify">
+      </label>
+      <button type="submit">Search</button>
+    </form>
+  </section>
+  {% if services %}
+    <ul class="summary">
+      <li class="down"><b>{{ counts.down }}</b><span>down</span></li>
+      <li class="degraded"><b>{{ counts.degraded }}</b><span>degraded</span></li>
+      <li class="up"><b>{{ counts.up }}</b><span>up</span></li>
+      <li class="unknown"><b>{{ counts.unknown }}</b><span>not checked</span></li>
+    </ul>
+    {% if groups.problems %}
+      <h2>Problems right now</h2>
+      {% with items=groups.problems %}{% include "cards.html" %}{% endwith %}
+    {% endif %}
+    {% if groups.up %}
+      <h2>Up</h2>
+      {% with items=groups.up %}{% include "cards.html" %}{% endwith %}
+    {% endif %}
+    {% if groups.unknown %}
+      <h2>Not checked yet</h2>
+      {% with items=groups.unknown %}{% include "cards.html" %}{% endwith %}
+    {% endif %}
+  {% elif query %}
+    <p class="empty">Nothing matched “{{ query }}”.</p>
+  {% else %}
+    {% if viewer and viewer.role == "admin" %}
+      <p class="empty">The catalog is empty. <a href="/admin/services/new">Add a service</a></p>
+    {% else %}
+      <p class="empty">The catalog is empty. An administrator adds services.</p>
+    {% endif %}
+  {% endif %}
+{% endblock %}

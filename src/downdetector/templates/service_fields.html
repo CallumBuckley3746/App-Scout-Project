@@ -1,0 +1,24 @@
+<label>
+  Name
+  <input name="name" value="{{ form.name }}" required maxlength="100">
+</label>
+<label>
+  Slug
+  <input name="slug" value="{{ form.slug }}" required maxlength="64" pattern="[A-Za-z0-9-]+" title="Letters, digits, and single hyphens.">
+</label>
+<label>
+  Apex domain
+  <input name="domain" value="{{ form.domain }}" required maxlength="253" placeholder="spotify.com">
+</label>
+<label>
+  Website
+  <input name="homepage_url" value="{{ form.homepage_url }}" required maxlength="2048" placeholder="https://open.spotify.com">
+</label>
+<label>
+  Company
+  <input name="company_name" value="{{ form.company_name }}" maxlength="100">
+</label>
+<label>
+  Description
+  <textarea name="description" rows="4" maxlength="4000">{{ form.description }}</textarea>
+</label>

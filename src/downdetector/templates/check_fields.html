@@ -1,0 +1,44 @@
+<label>
+  Kind
+  <select name="kind">
+    {% for value, label in kinds %}
+      <option value="{{ value }}" {% if prefix and prefix.kind == value %}selected{% elif not prefix and value == "http" %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+</label>
+<label>
+  Purpose
+  <select name="purpose">
+    {% for value, label in purposes %}
+      <option value="{{ value }}" {% if prefix and prefix.purpose == value %}selected{% elif not prefix and value == "primary" %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+</label>
+<label>
+  URL
+  <input name="url" value="{{ prefix.url if prefix and prefix.url else '' }}" maxlength="2048" placeholder="https://">
+</label>
+<label>
+  Interval, seconds
+  <input name="interval_seconds" inputmode="numeric" value="{{ prefix.interval_seconds if prefix else 60 }}">
+</label>
+<label>
+  Timeout, ms
+  <input name="timeout_ms" inputmode="numeric" value="{{ prefix.timeout_ms if prefix else 5000 }}">
+</label>
+<label>
+  Slow after, ms
+  <input name="slow_threshold_ms" inputmode="numeric" value="{{ prefix.slow_threshold_ms if prefix else 2000 }}">
+</label>
+<label>
+  Failures before down
+  <input name="failure_threshold" inputmode="numeric" value="{{ prefix.failure_threshold if prefix else 3 }}">
+</label>
+<label>
+  Successes before up
+  <input name="recovery_threshold" inputmode="numeric" value="{{ prefix.recovery_threshold if prefix else 2 }}">
+</label>
+<label class="checkline">
+  <input type="checkbox" name="enabled" value="1" {% if not prefix or prefix.enabled %}checked{% endif %}>
+  Check is enabled
+</label>

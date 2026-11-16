@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+  <section class="panel auth">
+    <h1>Register</h1>
+    <p class="muted">A new account is always a regular user. This form cannot create an administrator.</p>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="/register" class="stack">
+      <label>
+        Email
+        <input type="email" name="email" value="{{ email }}" autocomplete="email" required>
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" minlength="12" autocomplete="new-password" required>
+      </label>
+      <label>
+        Username, if you want one
+        <input type="text" name="username" value="{{ username }}" autocomplete="nickname" minlength="3" maxlength="32">
+      </label>
+      <button type="submit">Create account</button>
+    </form>
+    <p class="muted">Already registered? <a href="/login">Log in</a></p>
+  </section>
+{% endblock %}

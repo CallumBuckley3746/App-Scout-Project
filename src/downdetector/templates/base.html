@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Services{% endblock %} — down-detector</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">down-detector</a>
+    <nav>
+      {% if viewer %}
+        {% if viewer.role == "admin" %}
+          <a href="/admin">Catalog</a>
+        {% endif %}
+        <span class="who">{{ viewer.email }}</span>
+        <form method="post" action="/logout">
+          <button class="text" type="submit">Log out</button>
+        </form>
+      {% else %}
+        <a href="/login">Log in</a>
+        <a class="button" href="/register">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main class="wrap">
+    {% block body %}{% endblock %}
+  </main>
+  <script>
+    function hint(field) {
+      if (field.validity.valueMissing) return "Fill in this field.";
+      if (field.validity.typeMismatch) return "Enter a valid email address.";
+      if (field.validity.tooShort) return "Use at least " + field.minLength + " characters.";
+      if (field.validity.tooLong) return "Use at most " + field.maxLength + " characters.";
+      if (field.validity.patternMismatch) return field.title || "Use the requested format.";
+      return "";
+    }
+    document.addEventListener("invalid", (event) => {
+      const field = event.target;
+      if (!field || !field.setCustomValidity) return;
+      field.setCustomValidity(hint(field));
+    }, true);
+    document.addEventListener("input", (event) => {
+      const field = event.target;
+      if (field && field.setCustomValidity) field.setCustomValidity("");
+    }, true);
+  </script>
+</body>
+</html>
